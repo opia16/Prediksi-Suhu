@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Prediksi Suhu Laut</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <h1>Prediksi Suhu Laut</h1>
+    </header>
+
+    <div class="wrapper">
+        <!-- Form Input -->
+        <div class="card">
+            <h2>Input Data</h2>
+            <form action="/predict" method="POST">
+                <label for="latitude">Latitude:</label>
+                <input type="number" step="any" name="latitude" required placeholder="Contoh: -7.25">
+
+                <label for="longitude">Longitude:</label>
+                <input type="number" step="any" name="longitude" required placeholder="Contoh: 112.75">
+
+                <label for="depth">Kedalaman (m):</label>
+                <input type="number" step="any" name="depth" required placeholder="Contoh: 50">
+
+                <button type="submit">Prediksi Suhu 🌡️</button>
+            </form>
+        </div>
+
+        <!-- Hasil Prediksi -->
+        {% if temperature is not none %}
+        <div class="card result">
+            <h2>Hasil Prediksi</h2>
+            <p>📍 Latitude: {{ latitude }}</p>
+            <p>📍 Longitude: {{ longitude }}</p>
+            <p>🌊 Kedalaman: {{ depth }} m</p>
+            <h3>🌡️Perkiraan Suhu Laut🌡️<br> <strong style="font-size: 1.5em;">{{ temperature }} °C</strong></h3>
+        </div>
+        {% endif %}
+
+        <!-- Visualisasi -->
+        {% if plot_url %}
+        <div class="card plot">
+            <h2>Visualisasi</h2>
+            <img src="{{ plot_url }}" alt="Plot suhu vs kedalaman">
+        </div>
+        {% endif %}
+    </div>
+</body>
+</html>
